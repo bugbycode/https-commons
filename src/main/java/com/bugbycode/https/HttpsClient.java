@@ -10,6 +10,9 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.KeyManager;
@@ -51,7 +54,7 @@ public class HttpsClient {
 
 		String auth = client_id + ":" + client_secret;
 		
-		return sendData(url,auth,token.getBytes());
+		return sendData(url,auth,token.getBytes(),null);
 	}
 	
 	public String getToken(String url,String grant_type,String client_id,String client_secret,String scope) {
@@ -63,10 +66,27 @@ public class HttpsClient {
 		build.append("&client_secret=" + client_secret);
 		build.append("&scope=" + scope);
 		
-		return sendData(url,null,build.toString().getBytes());
+		return sendData(url,null,build.toString().getBytes(),null);
 	}
 	
-	public String sendData(String url,String auth,byte[] data) {
+	public String getResource(String url,String token,Map<String,Object> data) {
+		StringBuilder builder = new StringBuilder();
+		Iterator<Entry<String,Object>> it = data.entrySet().iterator();
+		while(it.hasNext()) {
+			Entry<String,Object> entry = it.next();
+			String key = entry.getKey();
+			String value = entry.getValue().toString();
+			if(builder.length() > 0) {
+				builder.append('&');
+			}
+			builder.append(key);
+			builder.append("=");
+			builder.append(value);
+		}
+		return sendData(url, null, builder.toString().getBytes(), token);
+	}
+	
+	public String sendData(String url,String auth,byte[] data,String token) {
 		HttpsURLConnection conn = null;
 		InputStream in = null;
 		OutputStream out = null;
@@ -84,6 +104,8 @@ public class HttpsClient {
 				conn.setRequestProperty("accept", "*/*");
 				conn.setRequestProperty("connection", "Keep-Alive");
 				conn.setRequestProperty("Authorization", "Basic " + new BASE64Encoder().encode(auth.getBytes()));
+			}else if(token != null) {
+				conn.setRequestProperty("Authorization", "Bearer " + token);
 			}
 			
 			out = conn.getOutputStream();
