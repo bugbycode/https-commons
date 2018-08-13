@@ -5,6 +5,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -23,7 +25,7 @@ public class AppTest {
 	
 	private final String CLIENT_ID = "fort";
 	
-	private final String SECRET = "J1d1sec.c0m1";
+	private final String SECRET = "j1d1sec.c0m";
 	
 	private final String SCOPE = "web";
 	
@@ -43,6 +45,15 @@ public class AppTest {
 	public void checkToken() {
 		String url = BASE_URL + "/oauth/check_token";
 		String result = httpClient.checkToken(url, CLIENT_ID, SECRET, "8e86b419-a616-401a-8e5e-ad0d33e8d76e");
+		System.out.println(result);
+	}
+	
+	@Test
+	public void checkResource() {
+		String url = "https://192.168.0.103/cloud_proxy/api/getChannel";
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("clientId", "fort");
+		String result = httpClient.getResource(url, "8e86b419-a616-401a-8e5e-ad0d33e8d76e", map);
 		System.out.println(result);
 	}
 	
