@@ -52,7 +52,10 @@ public class AppTest {
 	public void checkResource() {
 		String url = "https://proxy/cloud_proxy/api/getChannel";
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("clientId", "fort");
+		map.put("host", "192.168.1.199");
+		map.put("port", 60000);
+		map.put("closeApp", true);
+		map.put("clientId", "agent");
 		String result = httpClient.getResource(url, "8f55d71b-214e-4983-a88a-626b98056ab9", map);
 		System.out.println(result);
 	}
