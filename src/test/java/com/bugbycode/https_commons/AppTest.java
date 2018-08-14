@@ -21,13 +21,13 @@ public class AppTest {
 	
 	private HttpsClient httpClient;
 	
-	private final String BASE_URL = "https://192.168.0.103/agent-oauth2";
+	private final String BASE_URL = "https://proxy/agent-oauth2";
 	
-	private final String CLIENT_ID = "fort";
+	private final String CLIENT_ID = "agent";
 	
 	private final String SECRET = "j1d1sec.c0m";
 	
-	private final String SCOPE = "web";
+	private final String SCOPE = "agent";
 	
 	@Before
 	public void before() {
@@ -44,23 +44,23 @@ public class AppTest {
 	@Test
 	public void checkToken() {
 		String url = BASE_URL + "/oauth/check_token";
-		String result = httpClient.checkToken(url, CLIENT_ID, SECRET, "8e86b419-a616-401a-8e5e-ad0d33e8d76e");
+		String result = httpClient.checkToken(url, CLIENT_ID, SECRET, "8f55d71b-214e-4983-a88a-626b98056ab9");
 		System.out.println(result);
 	}
 	
 	@Test
 	public void checkResource() {
-		String url = "https://192.168.0.103/cloud_proxy/api/getChannel";
+		String url = "https://proxy/cloud_proxy/api/getChannel";
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("clientId", "fort");
-		String result = httpClient.getResource(url, "8e86b419-a616-401a-8e5e-ad0d33e8d76e", map);
+		String result = httpClient.getResource(url, "8f55d71b-214e-4983-a88a-626b98056ab9", map);
 		System.out.println(result);
 	}
 	
 	@Test
 	public void testHttpsReuqest() {
 		try {
-			HttpsURLConnection conn = httpClient.getHttpsURLConnection("https://192.168.0.103/agent-oauth2/oauth/check_token");
+			HttpsURLConnection conn = httpClient.getHttpsURLConnection("https://proxy/agent-oauth2/oauth/check_token");
 			conn.setAllowUserInteraction(true);
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
