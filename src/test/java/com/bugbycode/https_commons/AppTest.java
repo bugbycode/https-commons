@@ -50,10 +50,13 @@ public class AppTest {
 	
 	@Test
 	public void checkResource() {
-		String url = "https://proxy/proxy-console/api/host/query";
+		String url = "https://proxy/proxy-console/api/client/updateByClientId";
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("pageSize", 10);
-		String result = httpClient.getResource(url, "77deac5b-6cc8-4bf6-a9c2-2613d8016076", map);
+		map.put("clientId", "NzE3ZGE3MTliZDlmMzgxNDNjZmY4MjUyZmQ1NzExMTA=");
+		map.put("name", "代理客户端");
+		//map.put("alias", "fort");
+		map.put("clientSecret", "123");
+		String result = httpClient.getResource(url, "f494ae09-2ffa-47a4-b7d1-2f10fa7b58d5", map);
 		System.out.println(result);
 	}
 	
