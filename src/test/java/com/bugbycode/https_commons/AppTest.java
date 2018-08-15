@@ -23,11 +23,11 @@ public class AppTest {
 	
 	private final String BASE_URL = "https://proxy/agent-oauth2";
 	
-	private final String CLIENT_ID = "agent";
+	private final String CLIENT_ID = "fort";
 	
 	private final String SECRET = "j1d1sec.c0m";
 	
-	private final String SCOPE = "agent";
+	private final String SCOPE = "web";
 	
 	@Before
 	public void before() {
@@ -44,19 +44,16 @@ public class AppTest {
 	@Test
 	public void checkToken() {
 		String url = BASE_URL + "/oauth/check_token";
-		String result = httpClient.checkToken(url, CLIENT_ID, SECRET, "8f55d71b-214e-4983-a88a-626b98056ab9");
+		String result = httpClient.checkToken(url, CLIENT_ID, SECRET, "850c7908-8b49-4004-892b-55bd12bb628b");
 		System.out.println(result);
 	}
 	
 	@Test
 	public void checkResource() {
-		String url = "https://proxy/cloud_proxy/api/getChannel";
+		String url = "https://proxy/proxy-console/api/host/query";
 		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("host", "192.168.1.199");
-		map.put("port", 60000);
-		map.put("closeApp", true);
-		map.put("clientId", "agent");
-		String result = httpClient.getResource(url, "8f55d71b-214e-4983-a88a-626b98056ab9", map);
+		map.put("pageSize", 10);
+		String result = httpClient.getResource(url, "77deac5b-6cc8-4bf6-a9c2-2613d8016076", map);
 		System.out.println(result);
 	}
 	
